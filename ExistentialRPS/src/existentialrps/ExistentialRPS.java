@@ -44,7 +44,6 @@ public class ExistentialRPS {
         }
 
         for (int i = 0; i < amt; i++) {
-            roundsPlayed++;
 
             engine.setP2(Computer.getMove()); // get computer's move
             System.out.println("\n-----\nComputer's move has been chosen.");
@@ -84,10 +83,13 @@ public class ExistentialRPS {
         if (engine.getWinner() == 0) {
             System.out.println("Congratulations! You won this round!");
             gamesWon++;
+            roundsPlayed++;
         } else if (engine.getWinner() == 1) {
             System.out.println("Oof. You lost this round to the computer.");
+            roundsPlayed++;
         } else {
             System.out.println("Draw! Nobody wins. This is real life kids.");
+           
         }
         winPercent = gamesWon / (double) roundsPlayed;
         System.out.println("Your win percentage: %" + df.format(winPercent * 100) + "\n");
