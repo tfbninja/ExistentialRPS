@@ -1,6 +1,5 @@
 package existentialrps;
 
-import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,15 +13,10 @@ import java.util.Scanner;
  */
 public class ExistentialRPS {
 
-    public static DeepThought Computer = new DeepThought();
     public static Scanner keyboard = new Scanner(System.in);
     public static String[] prompts;
     public static Random random = new Random();
     public static RPSEngine engine = new RPSEngine();
-    public static double winPercent = 1;
-    public static int roundsPlayed = 0;
-    public static int gamesWon = 0;
-    public static DecimalFormat df = new DecimalFormat("##0.00");
 
     static {
         prompts = new String[4];
@@ -35,7 +29,7 @@ public class ExistentialRPS {
     public static void main(String[] args) {
         System.out.println("\nTim Barber\tNov 2018\tAPCS\n"); //Header
 
-        Computer.setDiffLevel(setDifficulty()); // difficulty level
+        engine.setAIDiffLevel(setDifficulty()); // difficulty level
 
         int amt = 0;
         while (amt < 1 || amt > 100) {
@@ -44,12 +38,10 @@ public class ExistentialRPS {
         }
 
         for (int i = 0; i < amt; i++) {
-
-            engine.setP2(Computer.getMove()); // get computer's move
+            engine.setComputerMove();
             System.out.println("\n-----\nComputer's move has been chosen.");
-
             engine.setP1(getPlayer()); // get player's move
-
+            engine.process();
             declareWinner();
         }
     }
@@ -82,18 +74,14 @@ public class ExistentialRPS {
         System.out.println("\nYou chose: " + engine.getP1() + ". The computer chose " + engine.getP2() + ".");
         if (engine.getWinner() == 0) {
             System.out.println("Congratulations! You won this round!");
-            gamesWon++;
-            roundsPlayed++;
         } else if (engine.getWinner() == 1) {
             System.out.println("Oof. You lost this round to the computer.");
-            roundsPlayed++;
         } else {
             System.out.println("Draw! Nobody wins. This is real life kids.");
-           
+
         }
-        winPercent = gamesWon / (double) roundsPlayed;
-        System.out.println("Your win percentage: %" + df.format(winPercent * 100) + "\n");
-        Computer.addPastMove(engine.getP1());
+
+        System.out.println("Your win percentage: %" + engine.getWinPercent() + "\n");
     }
 
 }

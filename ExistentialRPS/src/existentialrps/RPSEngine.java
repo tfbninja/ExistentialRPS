@@ -1,5 +1,6 @@
 package existentialrps;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 /**
@@ -9,8 +10,13 @@ import java.util.HashMap;
 public class RPSEngine {
 
     private static HashMap<String, Integer> winMap = new HashMap();
+    public DeepThought Computer = new DeepThought();
     private String p1;
     private String p2;
+    public double winPercent = 1;
+    public int roundsPlayed = 0;
+    public int gamesWon = 0;
+    public DecimalFormat df = new DecimalFormat("##0.00");
 
     static {  // init winMap
         winMap.put("r p", 1);
@@ -45,6 +51,7 @@ public class RPSEngine {
     }
 
     public void setP1(String p1) {
+        this.Computer.addPastMove(p1);
         this.p1 = p1.substring(0, 1);
     }
 
@@ -60,11 +67,35 @@ public class RPSEngine {
         this.p2 = String.valueOf(p2);
     }
 
+    public void setAIDiffLevel(int amt) {
+        this.Computer.setDiffLevel(amt);
+    }
+
+    public void setComputerMove() {
+        setP2(Computer.getMove());
+    }
+
+    public void process() {
+        String formatted = this.p1 + " " + this.p2;
+        if (!(this.p1.equals(this.p2))) {
+            this.roundsPlayed++;
+        }
+        if (!(this.p1.equals(this.p2)) && winMap.get(formatted) == 0) {
+            this.gamesWon++;
+        }
+    }
+
+    public String getWinPercent() {
+        this.winPercent = this.gamesWon / (double) this.roundsPlayed;
+        return df.format(this.winPercent * 100);
+    }
+
     public int getWinner() {
         String formatted = this.p1 + " " + this.p2;
         if (this.p1.equals(this.p2)) {
             return -1; // draw
         }
+
         return winMap.get(formatted);
     }
 

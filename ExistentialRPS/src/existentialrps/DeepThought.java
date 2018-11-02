@@ -115,7 +115,7 @@ public class DeepThought {
     }
 
     public String getMove() {
-        System.out.println(pastMoves);
+        //System.out.println(pastMoves); // debug
         if (random.nextInt(9) + 1 < this.diff_level) {
             if (random.nextInt(2) == 1) {
                 if (pastMoves.size() == 0) {
