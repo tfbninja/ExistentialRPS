@@ -121,7 +121,7 @@ public class DeepThought {
                 if (pastMoves.size() == 0) {
                     return randomChoiceThatMightBeSlanted();
                 } else if (pastMoves.size() == 1) {
-                    if (random.nextInt(2) == 0) {
+                    if (random.nextInt(3) < 2) {
                         return whateverBeatTheirLastMove();
                     }
                     return whateverLostTheirLastMove();
