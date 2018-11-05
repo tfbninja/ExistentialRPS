@@ -34,7 +34,18 @@ public class ExistentialRPS {
         int amt = 0;
         while (amt < 1 || amt > 100) {
             System.out.print("How many times would you like to play? ");
-            amt = keyboard.nextInt();
+            String temp = keyboard.next();
+            boolean isInt = true;
+            for (char i : temp.toCharArray()) {
+                if (!Character.isDigit(i)) {
+                    isInt = false;
+                }
+            }
+            if (isInt) {
+                amt = Integer.valueOf(temp);
+            } else {
+                amt = 0;
+            }
         }
 
         for (int i = 0; i < amt; i++) {
