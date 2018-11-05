@@ -12,6 +12,8 @@ public class DeepThought {
     private int diff_level;
     private Random random = new Random();
     private ArrayList<String> pastMoves = new ArrayList<>();
+    private boolean threeInARow = false;
+    private String threeMove = "";
 
     public DeepThought() {
         diff_level = 0;
@@ -115,8 +117,16 @@ public class DeepThought {
     }
 
     public String getMove() {
-        //System.out.println(pastMoves); // debug
         if (random.nextInt(9) + 1 < this.diff_level) {
+            if (random.nextInt(2) == 1) {
+                if (!threeInARow && pastMoves.size() == 0) {
+                    this.threeInARow = true;
+                    this.threeMove = randomMove("p");
+                }
+                if (threeInARow && pastMoves.size() < 4) {
+                    return this.threeMove;
+                }
+            }
             if (random.nextInt(2) == 1) {
                 if (pastMoves.size() == 0) {
                     return randomChoiceThatMightBeSlanted();

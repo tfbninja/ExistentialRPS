@@ -87,7 +87,11 @@ public class RPSEngine {
 
     public String getWinPercent() {
         this.winPercent = this.gamesWon / (double) this.roundsPlayed;
-        return df.format(this.winPercent * 100);
+        if (this.gamesWon > 0) {
+            return df.format(this.winPercent * 100);
+        } else {
+            return "0.00";
+        }
     }
 
     public int getWinner() {
